@@ -1,0 +1,46 @@
+pipeline {
+    agent any
+    stages {
+        stage("executingontest") {
+            when {
+                expression {
+                    BRANCH_NAME == 'testing'
+                }
+            }
+            steps {
+                echo "executing pipeline from $BRANCH_NAME"
+            }
+        }
+        stage("build")
+        {
+            when {
+                expression {
+                    BRANCH_NAME == "master"                       
+                }         
+            }
+            steps {
+                 echo " building application from $BRANCH_NAME"
+            }            
+        }
+        stage("testing") {
+            when {
+                expression {
+                    BRANCH_NAME == 'master'
+                }
+            }
+            steps {
+                echo "testing application from $BRANCH_NAME"
+            }
+        }
+         stage("deploying") {
+            when {
+                expression {
+                    BRANCH_NAME == 'master'
+                }
+            }
+            steps {
+                echo "deploying application from $BRANCH_NAME"
+            }
+        }
+    }
+}
